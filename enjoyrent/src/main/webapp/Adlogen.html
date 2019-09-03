@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>登录</title>
+		<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<style type="text/css">
+			body {
+				background-color: gainsboro;
+			}
+			
+			#head {
+				width: 100%;
+				height: 56px;
+			}
+			
+			#headLogo {
+				width: 120px;
+				height: 56px;
+			}
+			
+			#headLogo img {
+				height: 56px;
+				width: 100%;
+			}
+			
+			#loginBox {
+				padding-top: 15px;
+				padding-bottom: 15px;
+			}
+			
+			#loginBox a {
+				color: rgba(255, 255, 255, .5);
+				padding-right: .5rem;
+			}
+			
+			#loginBox a:hover {
+				color: rgba(255, 255, 255, .75);
+				text-decoration: none;
+			}
+			
+			#content {
+				width: 100%;
+				height: 500px;
+				background: url(img/轮播4.jpg);
+				background-size: 100% 500px;
+			}
+			
+			#loginForm {
+				width: 40%;
+				height: 400px;
+				margin: 0px auto;
+				padding-top: 30px;
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<header class="bg-dark" id="head">
+				<div id="headLogo" class="float-left"><img src="img/汽车logo.png" onclick="window.location.href='index.html'"></div>
+				<nav class="navbar navbar-expand-sm navbar-dark float-left">
+					<ul class="navbar-nav" style="padding-left: 100px;">
+						<li class="nav-item">
+							<a  class="nav-link">管理员登录界面</a>
+						</li>
+
+					</ul>
+				</nav>
+				<div id="loginBox" class="float-right">
+					<a href="login.html">登录</a>
+					<a href="register.html">注册</a>
+				</div>
+			</header>
+			<div id="content">
+				<div id="loginForm">
+					<div class="card">
+						<div class="card-header">登录</div>
+						<div class="card-body">
+							<form>
+								<div class="form-group">
+									<label for="username">管理用户名:</label>
+									<input type="text" class="form-control" id="username" name="username">
+								</div>
+								<div class="form-group">
+									<label for="password">密码:</label>
+									<input type="password" class="form-control" id="password" name="password">
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+										<input class="form-check-input" type="checkbox"> 记住我(不是自己电脑请不要勾选此项)
+									</label>
+								</div>
+								<button type="button" class="btn btn-primary" id="loginUp">登录</button>
+								<p id="msg"></p>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(window).on('load', () => {
+			$('#loginForm').fadeIn(1500);
+		})
+
+
+
+
+
+		$("#loginUp").click(function () {
+		    let username=document.getElementById("username").value.trim();
+		    if (!username) {
+		        alert("用户名不能为空")
+				return
+			}
+			let  password=document.getElementById("password").value.trim()
+			if (!password){
+			    alert("密码不能为空")
+				return
+			}
+			let xhr=new XMLHttpRequest()
+			xhr.open("post","login")
+			xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+			xhr.onreadystatechange=function () {
+			    if (xhr.readyState==4&&xhr.status==200) {
+			        let data=xhr.responseText
+					document.getElementById("msg").innerText=data
+				}
+				
+            }
+
+            xhr.send("username="+username+"&password="+password)
+
+
+        })
+
+	</script>
+
+</html>
