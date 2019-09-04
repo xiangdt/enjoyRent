@@ -14,6 +14,7 @@ public class CarType implements Serializable {
         return typeId;
     }
 
+
     public void setTypeId(Integer typeId) {
         this.typeId = typeId;
     }

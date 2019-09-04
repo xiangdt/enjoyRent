@@ -22,4 +22,5 @@ public class CarService {
         SqlSessionUtil.close(sqlSession);
         return list;
     }
+
 }

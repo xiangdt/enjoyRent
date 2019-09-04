@@ -21,4 +21,5 @@ public interface CarMapper {
     })
     @Select("select * from car")
     List<Car> findAll();
+
 }

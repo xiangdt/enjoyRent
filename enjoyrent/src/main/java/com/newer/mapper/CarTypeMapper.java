@@ -8,4 +8,5 @@ public interface CarTypeMapper {
 
     @Select("select * from cartype where typeid=#{typeId}")
     CarType findByNo(@Param("typeId")int typeid);
+
 }

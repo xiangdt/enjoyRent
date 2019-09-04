@@ -19,6 +19,7 @@ public class Car implements Serializable {
         this.carId = carId;
     }
 
+
     public String getPlateNumeber() {
         return plateNumeber;
     }
