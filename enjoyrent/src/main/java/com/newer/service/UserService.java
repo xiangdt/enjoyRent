@@ -6,6 +6,7 @@ import com.newer.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.Date;
+import java.util.List;
 
 public class UserService {
     private SqlSession sqlSession;
@@ -23,4 +24,12 @@ public class UserService {
         SqlSessionUtil.close(sqlSession);
         return rows;
     }
+   public List<User> findAll(){
+        init();
+        List<User> list=userMapper.findAll();
+        SqlSessionUtil.close(sqlSession);
+
+        return  list;
+
+   }
 }
