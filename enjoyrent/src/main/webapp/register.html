@@ -92,20 +92,45 @@
 					<div class="card">
 						<div class="card-header">注册</div>
 						<div class="card-body">
-							<form>
+							<form id="user" >
+								<input type="hidden" name="action" value="addUser">
 								<div class="form-group">
-									<label for="username">用户名:</label>
-									<input type="text" class="form-control" id="username" name="username">
+									<label for="username">* 用户名:<span id="msg1" style="color:red"></span></label>
+									<input type="text" class="form-control col-9" id="username" name="username" placeholder="请输入6-20位的字母或数字" onblur="checkusername1()";>
 								</div>
 								<div class="form-group">
-									<label for="password1">密码:</label>
-									<input type="password" class="form-control" id="password1" name="password1">
+									<label for="password1">* 密码:<span id="msg2" style="color:red"></span></label>
+									<input type="password" class="form-control" id="password1" name="password" placeholder="请输入6-20位密码" onblur="checkpassword()";>
 								</div>
 								<div class="form-group">
-									<label for="password2">重复密码:</label>
-									<input type="password" class="form-control" id="password2" name="password2">
+									<label for="password2">* 重复密码:<span id="msg3" style="color:red"></span></label>
+									<input type="password" class="form-control" id="password2" name="password2" placeholder="输入同样密码" onblur="checkpassword2()";>
 								</div>
-								<button type="button" class="btn btn-primary" id="registerUp" onclick="register()">注册</button>
+								<div class="form-group">
+									<label for="name">* 姓名:</label>
+									<input type="text" class="form-control " id="name" placeholder="您的姓名" name="name">
+								</div>
+								<div class="radio rentcarform">
+									<label>性别:</label>
+									<p><input type="radio" id="sexm" name="sex"  value="男" checked/>男
+									<input type="radio" id="sexf" name="sex"  value="女"/>女</p>
+								</div>
+								<div class="form-group">
+									<label for="mobile">电话:</label>
+									<input type="text" class="form-control " id="mobile" name="mobile">
+									<label for="email">地址:</label>
+									<input type="text" class="form-control " id="email" name="email">
+									<label for="address">邮箱:</label>
+									<input type="text" class="form-control " id="address" name="address">
+								</div>
+								<div class="form-group">
+									<label for="cardid">* 身份证号码:<span id="msg5" style="color:red"></span></label>
+									<input type="text" class="form-control" id="cardid" onblur="checkcid()" name="cardid">
+									<label for="licensenum">* 驾驶证档案编号:</label>
+									<input type="text" class="form-control " id="licensenum" name="licensenum">
+								</div>
+								<span id="msg4" style="color:red"></span></label>
+								<button type="button" class="btn btn-primary" id="registerUp" onclick="register()">下一步</button>
 							</form>
 						</div>
 					</div>
@@ -113,47 +138,175 @@
 			</div>
 		</div>
 	</body>
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/ajaxfileupload.js"></script>
 	<script type="text/javascript">
+		var uname=null
+
 		$(window).on('load', () => {
 			$('#loginForm').fadeIn(1500);
 		})
 
 		function register() {
-			$('#loginForm').hide();
-			let text = `<div class="card-header">用户信息填写(证件信息一旦验证用户无法自由修改!)</div>
+
+			    if(checkAll()) {
+                    uname = document.getElementById("username").value.trim()
+                    $('#loginForm').hide();
+                    $.ajax({
+                        url: "user",
+                        data: $("#user").serialize(),
+                        success: function (data) {
+                            if (data == "1") {
+                                let text = `
 						<div class="card-body">
 							<form>
 								<div class="form-group">
-									<label for="idCard">身份证号码:</label>
-									<input type="text" class="form-control" id="idCard" name="idCard">
-								</div>
-								<div class="form-group">
-									<label for="driverID">驾驶证档案编号:</label>
-									<input type="text" class="form-control col-4 rentcarform" id="driverID" name="driverID">
-									<label for="phone">电话:</label>
-									<input type="text" class="form-control col-4 rentcarform" id="phone" name="phone">
-								</div>
-								<div class="form-group">
-
-								</div>
-								<div class="form-group">
-									<label for="name">姓名:</label>
-									<input type="text" class="form-control col-3 rentcarform" id="name" name="name">
-									<label for="age">年龄:</label>
-									<input type="number" class="form-control col-3 rentcarform" id="age" name="age">&nbsp;&nbsp;&nbsp;&nbsp;
-									<div class="radio rentcarform">
-										<label>性别:</label>
-										<label><input type="radio" id="sexm" name="sex" />男</label>
-										<label><input type="radio" id="sexf" name="sex" />女</label>
-									</div>
-								</div>
-								<button type="button" class="btn btn-primary" id="registerUp" onclick="register()">注册</button>
+								<input type="hidden" name="action" value="addimg">
+                                <input type="hidden" name="username" value=uname>
+                                <label >身份证正面照片:</label>
+                                <input type="file" class="form-control  rentcarform"  name="img" id="cimg1" onchange="register1()">
+                                <label >身份证背面照片:</label>
+                                <input type="file" class="form-control  rentcarform"  name="img" id="cimg2" onchange="register2()">
+                                <label >驾驶证照片:</label>
+                                <input type="file" class="form-control  rentcarform"  name="img" id="limg" onchange="register3()">
+                                </div>
+                                <div class="form-group">
+                                <button type="button" class="btn btn-primary" id="" onclick="register4()">注册</button>
+                                </div>
 							</form>
 						</div>`
-			$('.card').empty();
-			$('.card').append(text);
-			$('#loginForm').fadeIn(1500);
+                                $('.card').empty();
+                                $('.card').append(text);
+                                $('#loginForm').fadeIn(1000);
+                            }
+                        }
+                    })
+                }
 		}
-	</script>
+		function register1() {
+		    $.ajaxFileUpload({
+				url:"user?choice=a&username="+uname,
+				type:"post",
+                fileElementId :'cimg1',
+				success:function (data) {
+                }
+            })
+        }
+        function register2() {
+            $.ajaxFileUpload({
+                url:"user?choice=b&username="+uname,
+                type:"post",
+                fileElementId : 'cimg2',
+                success:function (data) {
+                }
+            })
+        }
+        function register3() {
+            $.ajaxFileUpload({
+                url:"user?choice=c&username="+uname,
+                type:"post",
+                fileElementId : 'limg',
+                success:function (data) {
+                }
+            })
 
+        }
+        function register4() {
+			window.location.href="login.html"
+        }
+        function checkusername() {
+            let usern=$("#username").val()
+            let regex = /\w{6,20}/
+            if (!regex.test(usern)) {
+                $("#msg1").css("color","rad")
+                $("#msg1").text("请输入6-20位的字母或数字")
+                return false
+            }else {
+                return true
+			}
+        }
+        function checkusername1() {
+            let usern=$("#username").val()
+            let regex = /\w{6,20}/
+            if (!regex.test(usern)) {
+                $("#msg1").css("color","rad")
+                $("#msg1").text("请输入6-20位的字母或数字")
+                return false
+            }
+			$.ajax({
+				url:"user",
+				data: {"action":"findByUsername","username":usern},
+				success:function (data) {
+					if (data==1){
+					    $("#msg1").css("color","rad")
+					    $("#msg1").text("已存在")
+					}else{
+                        $("#msg1").css("color","green")
+                        $("#msg1").text("可用")
+					}
+                }
+			})
+        }
+        function checkpassword() {
+            let password=$("#password1").val()
+            let regex1 = /^\d*\D*\w{6,20}$/
+            if (!regex1.test(password)) {
+                $("#msg2").css("color","rad")
+                $("#msg2").text("请输入6-20位密码")
+                return false
+            }else {
+                $("#msg2").text("")
+				return true
+			}
+        }
+        function checkpassword2() {
+            let password=$("#password1").val()
+			let password1=$("#password2").val()
+            if (password!=password1) {
+                $("#msg3").css("color","rad")
+                $("#msg3").text("两次密码不一致")
+                return false
+            }else {
+                $("#msg3").text("")
+				return true
+			}
+        }
+        function check() {
+            let usern=$("#username").val()
+            let password=$("#password1").val()
+			let name=$("#name").val()
+		    let cardid=$("#cardid").val()
+			let licensenum=$("#licensenum").val()
+			if (!usern||!password||!name||!cardid||!licensenum) {
+                document.getElementById("msg4").textContent = '带*号为必填'
+                document.getElementById("msg4").style.display = "block"
+                setTimeout(() => {
+                    document.getElementById("msg4").style.display = "none"
+                }, 2000);
+                return false
+			}else {
+			    return true
+			}
+        }
+        function checkcid() {
+            let cardid=$("#cardid").val()
+			let regex=/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+			if (!regex.test(cardid)){
+                $("#msg5").css("color","rad")
+                $("#msg5").text("身份证号码不正确")
+			    return false
+			}else {
+                $("#msg5").text("")
+				return true
+			}
+        }
+        function checkAll() {
+            if (check()&&checkusername()&&checkpassword()&&checkpassword2()&&checkcid()) {
+                return true
+			}else {
+                return false
+			}
+        }
+
+	</script>
 </html>

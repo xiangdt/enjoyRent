@@ -13,10 +13,27 @@ public class User {
     private String email;
     private String address;
     private String userstate;
-    private String cardimg;
+    private String frontcardimg;
+    private String versocardimg;
     private String licenseimg;
     private String licensenum;
     private Date jointime;
+
+    public String getFrontcardimg() {
+        return frontcardimg;
+    }
+
+    public void setFrontcardimg(String frontcardimg) {
+        this.frontcardimg = frontcardimg;
+    }
+
+    public String getVersocardimg() {
+        return versocardimg;
+    }
+
+    public void setVersocardimg(String versocardimg) {
+        this.versocardimg = versocardimg;
+    }
 
     public Integer getUserid() {
         return userid;
@@ -98,13 +115,6 @@ public class User {
         this.userstate = userstate;
     }
 
-    public String getCardimg() {
-        return cardimg;
-    }
-
-    public void setCardimg(String cardimg) {
-        this.cardimg = cardimg;
-    }
 
     public String getLicenseimg() {
         return licenseimg;
@@ -143,7 +153,8 @@ public class User {
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", userstate='" + userstate + '\'' +
-                ", cardimg='" + cardimg + '\'' +
+                ", frontcardimg='" + frontcardimg + '\'' +
+                ", versocardimg='" + versocardimg + '\'' +
                 ", licenseimg='" + licenseimg + '\'' +
                 ", licensenum='" + licensenum + '\'' +
                 ", jointime=" + jointime +

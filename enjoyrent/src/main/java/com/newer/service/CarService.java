@@ -1,6 +1,7 @@
 package com.newer.service;
 
 import com.newer.domain.Car;
+import com.newer.domain.User;
 import com.newer.mapper.CarMapper;
 import com.newer.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
